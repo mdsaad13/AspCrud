@@ -1,56 +1,96 @@
 ﻿@model AspCrud.Models.UserInfo
 
 @{
-    ViewBag.Title = "Register";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
 
-<h2>Register</h2>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 
+    <!-- Font awesome CDN -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <style>
+        .error {
+            position: relative;
+            top: -15px;
+            color: #dc3545 !important;
+        }
+    </style>
+</head>
+<body style="background:#e9ecef">
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>UserInfo</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    <div class="loginRegister-div">
+
+        <h1 class="loginRegister-header">Register</h1>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+            <div class="input-group mb-3">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Name" } })
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <i class="icon-user"></i>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "error" })
+        
+            <div class="input-group mb-3">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <i class="icon-envelope"></i>
+                    </div>
+                </div>
             </div>
-        </div>
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Passwd, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Passwd, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Passwd, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <div class="input-group mb-3">
+                @Html.PasswordFor(model => model.Passwd, new { @class = "form-control", placeholder = "Password" })
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <i class="icon-lock"></i>
+                    </div>
+                </div>
             </div>
-        </div>
+            @Html.ValidationMessageFor(model => model.Passwd, "", new { @class = "error" })
+        
+            <div class="input-group mb-3">
+                @Html.PasswordFor(model => model.ConfirmPass, new { @class = "form-control", placeholder = "Re-Enter Password" })
+
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <i class="icon-lock"></i>
+                    </div>
+                </div>
+            </div>
+            @Html.ValidationMessageFor(model => model.ConfirmPass, "", new { @class = "error" })
+
+            <div class="input-group">
+                <button class="btn btn-primary w-100" type="submit">Create Account</button>
+            </div>
+            <br />
+            <div class="input-group">
+                @Html.ActionLink("Login?", "Login")
+            </div>
+        }
+
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
+    @Scripts.Render("~/bundles/jqueryslim")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
-}
+
+</body>
+</html>
+
