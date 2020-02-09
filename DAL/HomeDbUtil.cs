@@ -1,6 +1,7 @@
 ﻿using AspCrud.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -53,6 +54,35 @@ namespace AspCrud.DAL
                 Conn.Close();
             }
             return rows;
+        }
+
+        public List<StudentDetails> GetAllStudents()
+        {
+            DataTable td = new DataTable();
+            List<StudentDetails> list = new List<StudentDetails>();
+            try
+            {
+                string sqlquery = "SELECT * FROM Student ORDER BY Id DESC";
+                SqlCommand cmd = new SqlCommand(sqlquery, Conn);
+                SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                Conn.Open();
+                adp.Fill(td);
+                foreach (DataRow row in td.Rows)
+                {
+                    StudentDetails obj = new StudentDetails();
+                    obj.ID = Convert.ToInt32(row["Id"]);
+                    obj.Name = Convert.ToString(row["Name"]);
+                    obj.Department = Convert.ToString(row["Department"]);
+                    list.Add(obj);
+                }
+            }
+            catch (Exception)
+            { }
+            finally
+            {
+                Conn.Close();
+            }
+            return list;
         }
     }
 }

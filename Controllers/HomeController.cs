@@ -12,6 +12,22 @@ namespace AspCrud.Controllers
     {
         public ActionResult Index()
         {
+            /*
+             * Creating object of DAL class `HomeDbUtil`
+             */
+            HomeDbUtil dbObj = new HomeDbUtil();
+
+            /*
+             * List class of type `StudentDetails` model
+             * List is a dynamic generic collection array 
+             */
+            List<StudentDetails> details = new List<StudentDetails>();
+            details = dbObj.GetAllStudents();
+            return View(details);
+        }
+
+        public ActionResult AddStudent()
+        {
             return View();
         }
 
@@ -19,7 +35,7 @@ namespace AspCrud.Controllers
         public ActionResult AddStudent(StudentDetails std)
         {
             /*
-             * Creating object of DAL class HomeDbUtil
+             * Creating object of DAL class `HomeDbUtil`
              */
             HomeDbUtil db = new HomeDbUtil();
 
@@ -44,10 +60,12 @@ namespace AspCrud.Controllers
                 Session["Notification"] = 2;
                 return RedirectToAction("Index");
             }
-
-            //ViewBag.Message = "Your contact page.";
         }
 
+        public ActionResult UpdateStudent(int stdId)
+        {
+            return View();
+        }
         public ActionResult About()
         {
             //ViewBag.Message = "About from ViewBag";

@@ -1,93 +1,54 @@
-﻿@{
+﻿@model IEnumerable<AspCrud.Models.StudentDetails>
+@{
     ViewBag.Title = "Home Page";
 }
-@model AspCrud.Models.StudentDetails
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            @using (Html.BeginForm("AddStudent", "Home", FormMethod.Post))
-            {
-                <div class="modal-body">
-                    @Html.AntiForgeryToken()
 
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Department, htmlAttributes: new { @class = "control-label" })
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add Student</button>
-                </div>
-            }
-        </div>
-    </div>
-</div>
-
-<h2>
-    List of Students
-    <button class="btn btn-dark" style="float:right" data-toggle="modal" data-target="#exampleModalCenter">Add Student</button>
-</h2>
+    <h2>
+        List of Students
+        <a class="btn btn-dark" style="float:right" href="/Home/AddStudent">Add Student</a>
+    </h2>
 
 <table class="table">
     <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
+            <th scope="col">ID</th>
             <th scope="col">Name</th>
             <th scope="col">Department</th>
             <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>
-                <a href="@Url.Action("About", "Home")" class="text-primary">
-                    <i class="icon-edit"></i>
-                    Edit
-                </a>
-                <br />
-                <a href="" class="text-danger">
-                    <i class="icon-trash"></i>
-                    Delete
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>twitter</td>
-        </tr>
+
+        @{int i = 1; }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@i</th>
+                <th scope="row">
+                    STD-@Html.DisplayFor(modelItem => item.ID)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    <a href="" class="text-primary">
+                        <i class="icon-edit"></i>
+                        Edit
+                    </a>
+                    <br />
+                    <a href="" class="text-danger">
+                        <i class="icon-trash"></i>
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            i++;
+        }
+
     </tbody>
 </table>
 @section scripts {
