@@ -13,7 +13,7 @@ namespace AspCrud.DAL
         /*
          * Conn = connection string of database `Login`
          */
-        SqlConnection Conn = new SqlConnection("Data Source=localhost;Initial Catalog=Login;Integrated Security=True");
+        SqlConnection Conn = new SqlConnection("Data Source=localhost;Initial Catalog=AspCrud;Integrated Security=True");
 
         public int CreateAccount(UserInfo user)
         {
@@ -23,15 +23,15 @@ namespace AspCrud.DAL
                 /*
                  * Creating a SQL prepared statement
                  */
-                string query = "INSERT INTO Users(Name,Email,password)" +
-                        " VALUES(@Name,@Email,@password)";
+                string query = "INSERT INTO Users(Name,Email,Password)" +
+                        " VALUES(@name,@email,@password)";
                 SqlCommand cmd = new SqlCommand(query, Conn);
 
                 /*
                  * Binding the SQL prepared statement with values
                  */
-                cmd.Parameters.Add(new SqlParameter("Name", user.Name));
-                cmd.Parameters.Add(new SqlParameter("Email", user.Email));
+                cmd.Parameters.Add(new SqlParameter("name", user.Name));
+                cmd.Parameters.Add(new SqlParameter("email", user.Email));
                 cmd.Parameters.Add(new SqlParameter("password", user.Passwd));
 
                 /*
@@ -76,13 +76,13 @@ namespace AspCrud.DAL
                 /*
                  * Creating a SQL prepared statement
                  */
-                string query = "select * from Users where Email=@Email and password=@password";
+                string query = "select * from Users where Email=@email and Password=@password";
                 SqlCommand cmd = new SqlCommand(query, Conn);
 
                 /*
                  * Binding the SQL prepared statement with values
                  */
-                cmd.Parameters.Add(new SqlParameter("Email", Email));
+                cmd.Parameters.Add(new SqlParameter("email", Email));
                 cmd.Parameters.Add(new SqlParameter("password", password));
 
                 /*
