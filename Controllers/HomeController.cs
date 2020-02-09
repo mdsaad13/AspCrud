@@ -31,6 +31,7 @@ namespace AspCrud.Controllers
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult AddStudent(StudentDetails std)
         {
@@ -62,10 +63,61 @@ namespace AspCrud.Controllers
             }
         }
 
-        public ActionResult UpdateStudent(int stdId)
+        public ActionResult EditStudent(int id)
         {
-            return View();
+            HomeDbUtil dbObj = new HomeDbUtil();
+            StudentDetails stdobj = dbObj.GetStudentByID(id);
+            return View(stdobj);
         }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult EditStudent(StudentDetails std)
+        {
+            HomeDbUtil dbObj = new HomeDbUtil();
+
+            int rows = dbObj.EditStud(std);
+            if (rows > 0)
+            {
+                /*
+                 * if update success
+                 */
+                Session["Notification"] = 3;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                /*
+                 * if update failure
+                 */
+                Session["Notification"] = 4;
+                return RedirectToAction("Index");
+            }
+        }
+
+        public ActionResult DeleteStudent(int id)
+        {
+            HomeDbUtil dbObj = new HomeDbUtil();
+
+            int rows = dbObj.Delete(id);
+            if (rows > 0)
+            {
+                /*
+                 * if delete success
+                 */
+                Session["Notification"] = 5;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                /*
+                 * if delete failure
+                 */
+                Session["Notification"] = 6;
+                return RedirectToAction("Index");
+            }
+        }
+
         public ActionResult About()
         {
             //ViewBag.Message = "About from ViewBag";

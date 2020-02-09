@@ -84,5 +84,80 @@ namespace AspCrud.DAL
             }
             return list;
         }
+
+        internal StudentDetails GetStudentByID(int id)
+        {
+
+            DataTable td = new DataTable();
+            StudentDetails obj = new StudentDetails();
+            try
+            {
+                string sqlquery = "SELECT * FROM Student where Id = @id";
+                SqlCommand cmd = new SqlCommand(sqlquery, Conn);
+                cmd.Parameters.Add(new SqlParameter("id", id));
+                SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                Conn.Open();
+                adp.Fill(td);
+
+                obj.ID = Convert.ToInt32(td.Rows[0]["Id"]);
+                obj.Name = Convert.ToString(td.Rows[0]["Name"]);
+                obj.Department = Convert.ToString(td.Rows[0]["Department"]);
+
+            }
+            catch (Exception)
+            { }
+            finally
+            {
+                Conn.Close();
+            }
+            return obj;
+
+        }
+        
+        internal int EditStud(StudentDetails model)
+        {
+            int rows = 0;
+            try
+            {
+                string query = "UPDATE Student SET Name= @name, Department = @dept where Id = @id";
+                SqlCommand cmd = new SqlCommand(query, Conn);
+                cmd.Parameters.Add(new SqlParameter("@name", model.Name));
+                cmd.Parameters.Add(new SqlParameter("@dept", model.Department));
+                cmd.Parameters.Add(new SqlParameter("@id", model.ID));
+                Conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                Conn.Close();
+            }
+            return rows;
+        }
+
+        internal int Delete(int id)
+        {
+            int rows = 0;
+            try
+            {
+                string query = "DELETE from Student where Id = @id";
+                SqlCommand cmd = new SqlCommand(query, Conn);
+                cmd.Parameters.Add(new SqlParameter("@id", id));
+                Conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                Conn.Close();
+            }
+            return rows;
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace AspCrud.Controllers
         }
 
         //Post method of Login
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Login(UserInfo User)
         {
@@ -66,6 +67,7 @@ namespace AspCrud.Controllers
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Register(UserInfo user)
         {
@@ -98,8 +100,12 @@ namespace AspCrud.Controllers
                 ";
                 return View();
             }
-            
         }
 
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

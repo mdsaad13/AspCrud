@@ -26,7 +26,7 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         @*
-                    Html.ActionLink(Display text, Action Name, Controller, HTML Attributes)
+                Html.ActionLink(Display text, Action Name, Controller, HTML Attributes)
                         *@
                         @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link " })
                     </li>
@@ -42,16 +42,20 @@
                     </li>
                 </ul>
                 @*
-            if Session is not set or user has not logged in then displaying Login and register options
+        if Session is not set or user has not logged in then displaying Login and register options
                 *@
                 @{ if (Session["UserID"] == null)
                     {
                         <div class="my-2 my-lg-0">
-                            @Html.ActionLink("Login", "Login", "Account", new { area = "" }, new { @class = "btn btn-primary my-2 my-sm-0" }) 
+                            @Html.ActionLink("Login", "Login", "Account", new { area = "" }, new { @class = "btn btn-primary my-2 my-sm-0" })
                             &nbsp;
                             @Html.ActionLink("Create Account", "Register", "Account", new { area = "" }, new { @class = "btn btn-warning my-2 my-sm-0" })
 
                         </div>
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "btn btn-danger my-2 my-sm-0" })
                     }
                 }
 
