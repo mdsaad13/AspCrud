@@ -18,7 +18,7 @@ namespace AspCrud
                         "~/Scripts/jquery.validate*"));
             
             bundles.Add(new ScriptBundle("~/bundles/sweetalert").Include(
-                        "~/Scripts/sweetalert2.js"));
+                        "~/Scripts/Additional/sweetalert2.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));

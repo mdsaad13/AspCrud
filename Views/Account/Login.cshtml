@@ -13,6 +13,9 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <!-- animate.css library to support wow.js -->
+    <link href="~/Content/Additional/animate.css" rel="stylesheet" />
+
     <!-- Font awesome CDN -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <style>
@@ -23,55 +26,60 @@
         }
     </style>
 </head>
-<body style="background:#e9ecef">
+<body style="background-color:#cfd8dc">
 
     <div class="loginRegister-div">
 
-        <h1 class="loginRegister-header">Login</h1>
+        <div class="wow fadeIn" data-wow-duration="1.4s">
+            <h1 class="loginRegister-header">Login</h1>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+                @Html.Raw(ViewData["Error"])
 
-            @Html.Raw(ViewData["Error"])
+                <div class="input-group mb-3">
 
-            <div class="input-group mb-3">
-
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                        <i class="icon-envelope"></i>
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <i class="icon-envelope"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error" })
 
-            <div class="input-group mb-3">
-                @Html.PasswordFor(model => model.Passwd, new { @class = "form-control", placeholder = "Password" })
+                <div class="input-group mb-3">
+                    @Html.PasswordFor(model => model.Passwd, new { @class = "form-control", placeholder = "Password" })
 
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                        <i class="icon-lock"></i>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <i class="icon-lock"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-            @Html.ValidationMessageFor(model => model.Passwd, "", new { @class = "error" })
+                @Html.ValidationMessageFor(model => model.Passwd, "", new { @class = "error" })
 
-            <div class="input-group">
-                <button class="btn btn-primary w-100" type="submit">Login</button>
-            </div>
-            <br />
-            <div class="input-group">
-                @Html.ActionLink("Create account", "Register")
-            </div>
-        }
-
+                <div class="input-group">
+                    <button class="btn btn-primary w-100" type="submit">Login</button>
+                </div>
+                <br />
+                <div class="input-group">
+                    @Html.ActionLink("Create account", "Register")
+                </div>
+            }
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jqueryslim")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
 
+    <script src="~/Scripts/Additional/wow.min.js" type="text/javascript"></script>
+    <script>
+       // Initiate the wowjs animation library
+       new WOW().init();
+    </script>
 </body>
 </html>
 

@@ -53,7 +53,7 @@ namespace AspCrud.Controllers
                  * if user does not exist then display error message
                  */
                 ViewData["Error"] = @"
-                    <div class=""alert alert-danger"" role=""alert"">
+                    <div class=""alert alert-danger wow shake"" role=""alert"" data-wow-delay=""1s"">
                       Incorrect Email or Password!
                     </div>
                 ";
